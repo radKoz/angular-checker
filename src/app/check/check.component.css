@@ -1,0 +1,13 @@
+
+.check-detail-input> div, p, input {
+    margin: 0;
+    padding: 0;
+}
+
+.check-detail-input > input {
+    margin: 0;
+    padding: 0;
+    font-size: 40px;
+    padding: 5px;
+    margin: 5px;
+}

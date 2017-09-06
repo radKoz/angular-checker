@@ -1,0 +1,10 @@
+<h1> Historia</h1>
+
+
+<div>
+  <ul>
+    <li *ngFor="let elem of storedItems"> {{ elem }} </li>
+  </ul>
+</div>
+<button (click)='tester()'> Log</button>
+<button (click)='reset()'> Wyczyść Historię</button>
