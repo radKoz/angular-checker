@@ -8,10 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'app';
-  private list: string[];
+  // private list: string[];
 
   ngOnInit() {
-    this.list = ['']
+    // this.list = ['']
   }
 
 }

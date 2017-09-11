@@ -1,7 +1,7 @@
 import { CheckDetailComponent } from './../check-detail/check-detail.component';
 import { HistoryComponent } from './../history/history.component';
 import { CheckService } from './../check.service';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs';
 
@@ -19,7 +19,7 @@ export class CheckComponent implements OnInit {
   serverData: string;
   myJSON; 
   // storedItems = this.checkService.storedItems; 
- 
+
   inputVal: Array <any> = this.checkService.inputValueArr;
 
 
@@ -29,64 +29,73 @@ export class CheckComponent implements OnInit {
 
  // pobiera dane z serwera
   loadData(): void {
-    this.checkService.getData().subscribe(data => this.serverData = data);
-    this.checkService.myJSON = JSON.parse(JSON.stringify(this.serverData || null));
-    this.myJSON = this.checkService.myJSON;
-    this.isActive = true;
+    // this.checkService.getData().subscribe(data => this.serverData = data);
+    // this.checkService.myJSON = JSON.parse(JSON.stringify(this.serverData || null));
+    // this.myJSON = this.checkService.myJSON;
+    // this.isActive = true;
+    // console.log(this.serverData)
   }
 
 // zapisuje input
   saveInput(inputValue: string): void {
     this.checkService.searchValue = inputValue.toUpperCase()
 
-    this.checkService.inputValueArr.push(this.checkService.searchValue)
+    // this.checkService.inputValueArr.push(this.checkService.searchValue)
 
     this.compare()
    
   }
 
-// sprawdza duplikat
+  
+// sprawdza czy duplikat
   compare() {
     
-    if (this.checkService.storedItems.indexOf(this.checkService.searchValue)>-1) {
-      alert("oks tutaj teraz maja byc dane z localstorage")
+    if 
+      (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue)>-1)
+     {
+      console.log("show storeditems.value ;)")
+      
     } else {
       this.store() 
       }
   }
-// dodaje input do localstorage
 
+// dodaje input do localstorage
   store(): void {
     if (this.checkService.storedItems != null){
-    this.checkService.storedItems.push(this.checkService.searchValue);
+    this.checkService.storedItems.push(
+      {key: this.checkService.searchValue,
+      value: null}
+    );
     } else {
       this.checkService.storedItems = [this.checkService.searchValue];
     }
 
     localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
-   }
+  }
+
+  
 
     //pobiera dane z LS do array
    getDataFromLS(): void {
 
-     if (window.localStorage.hasOwnProperty('inputVal')){
+     if (window.localStorage.hasOwnProperty('inputVal')) {
       this.checkService.storedItems = JSON.parse(localStorage.getItem('inputVal')); 
+      
      } else {
       this.checkService.storedItems = [];
       }
-   }
+    }
 
   checkeroni(): void {
-    console.log("storedItems CHECKservice " + this.checkService.storedItems);
-    console.log("searchValue " + this.checkService.searchValue);
+    // console.log("storedItems CHECKservice " + this.checkService.storedItems);
+    // console.log("searchValue " + this.checkService.searchValue);
   }
   
 
 
   ngOnInit() {
-    // if (!this.checkService.searchValue) {
-    //   this.checkService.searchValue = "Brak historii"
-    // } 
+
     this.getDataFromLS();
     this.checkeroni();
 

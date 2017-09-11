@@ -1,10 +1,16 @@
 <h1> Historia</h1>
-
+<p *ngIf="!this.checkService.isNotEmpty"> Brak Historii<p>
 
 <div>
   <ul>
-    <li *ngFor="let elem of storedItems"> {{ elem }} </li>
+    <li *ngFor="let elem of storedItems" >
+    <a [routerLink]="['/detail', elem.key] "class="element col-1-4"> {{ elem.key }} 
+    </a>
+    <button class="btn btn-danger btn-cancel">X</button>
+    </li>
   </ul>
 </div>
-<button (click)='tester()'> Log</button>
-<button (click)='reset()'> Wyczyść Historię</button>
+<!-- <app-history-detail></app-history-detail> -->
+
+<button (click)='tester()' class="btn btn-default"> Log</button>
+<button (click)='reset()'class="btn btn-danger"> Wyczyść Historię</button>

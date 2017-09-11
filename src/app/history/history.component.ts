@@ -12,7 +12,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class HistoryComponent implements OnInit {
 
-  inputVal: Array <any> = this.checkService.inputValueArr
+  // inputVal: Array <any> = this.checkService.inputValueArr
   // newestElement = ' ';
   @Input() storedItems;
  
@@ -22,14 +22,16 @@ export class HistoryComponent implements OnInit {
     private checkComponent: CheckComponent) {   }
 
   
+    // showValue() {
+    //   if (this.storedItems.value === null) {
 
+    //   }
+    // }
 
     tester() {
-  
-      console.log("inputVal  " + this.inputVal)
+
       console.log("storedItems " + this.storedItems)
-      // console.log("newestElement  " + this.newestElement)
-      // this.checkService.storedItems = JSON.parse(localStorage.getItem('inputVal')); 
+
     }
 
     reset() {
@@ -39,6 +41,7 @@ export class HistoryComponent implements OnInit {
 
 
     ngOnInit() {
+    
      this.storedItems = this.checkService.storedItems;
     }
 

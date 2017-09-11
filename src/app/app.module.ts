@@ -6,19 +6,35 @@ import { AppComponent } from './app.component';
 import { CheckComponent } from './check/check.component';
 import { HistoryComponent } from './history/history.component';
 import { CheckDetailComponent } from './check-detail/check-detail.component';
+import { HistoryDetailComponent } from './history-detail/history-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from "./app-routing.module";
+
+
+// web API Simulation 
+
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
+
+import { InMemoryDataService }  from './in-memory-data.service';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
     CheckComponent,
     HistoryComponent,
     CheckDetailComponent,
+    HistoryDetailComponent,
     
   ],
   imports: [
     BrowserModule,
     HttpModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule,
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
+  
   ],
   providers: [
     CheckService
