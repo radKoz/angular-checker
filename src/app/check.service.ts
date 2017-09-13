@@ -1,3 +1,4 @@
+
 import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 import {Observable } from 'rxjs'; 
@@ -20,7 +21,7 @@ inputValueArr = []
 myJSON = '';
 searchValue: string;
 isNotEmpty: boolean;
-
+serverData: any[]
 private serverDataUrl = 'api/fakeServerData'
 
 constructor(private http: Http) {}
@@ -30,6 +31,15 @@ ngOnInit() {
 
 }
 
+
+getData(key: string){
+    const url = `${this.serverDataUrl}/${key}`;
+    this.http.get(url)
+    .subscribe(res => {
+        this.serverData = res.json();
+    })
+    console.log(this.serverData)
+}
 
 getItem(key: string) {
 

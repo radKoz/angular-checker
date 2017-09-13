@@ -30,6 +30,14 @@
     Wpisana wartość nie jest prawidłowa.
   </div>
 </form>
+<div *ngIf="serverData">
+  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
+  <p>{{ serverData.data.value.CompanyInformation.Street  }}</p>
+  <p>{{ serverData.data.value.CompanyInformation.HouseNumber  }}</p>
+  <p>{{ serverData.data.value.CompanyInformation.PostalCode  }}</p>
+  <p>{{ serverData.data.value.CompanyInformation.Place  }}</p>
+  <p>{{ serverData.data.value.CompanyInformation.Type  }}</p>
+  </div>
 <div>
     <ul>
       <li *ngFor="let elem of InputValArr"> {{ elem }} </li>

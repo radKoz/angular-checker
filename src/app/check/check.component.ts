@@ -1,10 +1,11 @@
+import { distinctUntilKeyChanged } from 'rxjs/operator/distinctUntilKeyChanged';
 import { CheckDetailComponent } from './../check-detail/check-detail.component';
 import { HistoryComponent } from './../history/history.component';
 import { CheckService } from './../check.service';
 import { Component, OnInit } from '@angular/core';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs';
-
+import 'rxjs/add/operator/switchMap';
 
 @Component({
   selector: 'app-check',
@@ -16,13 +17,11 @@ import { Observable } from 'rxjs';
 export class CheckComponent implements OnInit {
 
   isActive: boolean;
-  serverData: string;
+  serverData;
   myJSON; 
-  // storedItems = this.checkService.storedItems; 
-
-  inputVal: Array <any> = this.checkService.inputValueArr;
-
-
+  lsData;
+  // storedItems = this.checkService.storedItems;
+  // inputVal: Array <any> = this.checkService.inputValueArr;
 
 
   constructor(private checkService: CheckService) { }
@@ -39,9 +38,7 @@ export class CheckComponent implements OnInit {
 // zapisuje input
   saveInput(inputValue: string): void {
     this.checkService.searchValue = inputValue.toUpperCase()
-
-    // this.checkService.inputValueArr.push(this.checkService.searchValue)
-
+    this.checkService.getData(inputValue.toUpperCase());
     this.compare()
    
   }
@@ -54,10 +51,27 @@ export class CheckComponent implements OnInit {
       (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue)>-1)
      {
       console.log("show storeditems.value ;)")
+     
       
+     this.serverData = this.checkService.serverData;
+     console.log(this.serverData)
+      this.update()
     } else {
       this.store() 
       }
+  }
+
+// uaktualnia dane w localstorage 
+  update() {
+   this.lsData = JSON.parse(localStorage.inputVal);
+    
+    for (let i =0; i < this.lsData.length; i++) {
+      if (this.checkService.searchValue === this.lsData[i].key && this.lsData[i].value === null) {
+        this.lsData[i].value = "witam do testu"
+        break;
+      }
+    }
+    localStorage.setItem("inputVal", JSON.stringify(this.lsData))
   }
 
 // dodaje input do localstorage
@@ -95,14 +109,13 @@ export class CheckComponent implements OnInit {
 
 
   ngOnInit() {
-
+    
     this.getDataFromLS();
     this.checkeroni();
-
-  }
-
+    
+   
 }
-
+}
 /*
 0. pobierany jest localstorage
 1 koles wpisuje input 
@@ -111,3 +124,5 @@ export class CheckComponent implements OnInit {
 2.2 if input jest nowy wtedy odpalamy getData() z serwera
 2.3 zapisujemy ten input razem z wynikiem chyba najlepiej bedzie jako array obiektow [{NIP: { wszystkie dane }}, {NIP2: { wszystkie dane}}]
 */
+
+// Robimy tego brojona tzn pobieramy z serwera tak jak router zeby pokazal ladnie obiekt a nie promise

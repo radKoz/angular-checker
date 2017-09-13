@@ -25,17 +25,16 @@ companyInfo;
 
     this.route.paramMap
       .switchMap((params: ParamMap) => this.checkService.getItem(params.get('key')))
-      .subscribe(storedItem => {
-        this.storedItemon = storedItem
-       this.companyInfo =  JSON.stringify(this.storedItemon.value.CompanyInformation)
-        console.log(this.storedItemon)
-        console.log(this.companyInfo)
-      
-      });
-     
-        
-  
+      .subscribe(storedItem => this.storedItemon = storedItem);
   }
 
+  teston() {
+    const brokje = this.checkService.getItem(this.checkService.searchValue)
+    
+    
+      console.log(brokje)
+
+
+  }  
 
 }
