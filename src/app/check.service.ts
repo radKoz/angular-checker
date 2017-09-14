@@ -36,25 +36,45 @@ ngOnInit() {
 
 getData(key: string){
     const url = `${this.serverDataUrl}/${key}`;
-    this.http.get(url)
-    .subscribe(res => {
+    return this.http.get(url)
+        .map(res => res.json())
+
+    // .subscribe(res => {
         
-        this.serverData = res.json();
-        this.err404 = false;
+    //     this.serverData = res.json();
+    //     this.err404 = false;
         
-        },
-    (err: Response) => {
-        if (err.status === 404){
-            this.err404 = err.status;
+    //     },
+    // (err: Response) => {
+    //     if (err.status === 404){
+    //         this.err404 = err.status;
      
-    }
+    // }
       
-        console.log(this.err404)
+    //     console.log(this.err404)
    
-    })
-    
-   
+    // })   
 }
+
+// getData(key: string){
+//     const url = `${this.serverDataUrl}/${key}`;
+//     this.http.get(url)
+//     .subscribe(res => {
+        
+//         this.serverData = res.json();
+//         this.err404 = false;
+        
+//         },
+//     (err: Response) => {
+//         if (err.status === 404){
+//             this.err404 = err.status;
+     
+//     }
+      
+//         console.log(this.err404)
+   
+//     })   
+// }
 
 // getItem(key: string) {
 

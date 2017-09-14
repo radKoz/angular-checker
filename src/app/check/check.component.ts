@@ -31,43 +31,81 @@ export class CheckComponent implements OnInit {
 
 
   // zapisuje input
-  onClick(inputValue: string): void {
-    let inVal = inputValue.toUpperCase().replace(/-/g, '')
-    this.checkService.getData(inVal);
-    if (this.checkService.serverData) {
 
-      if (inVal == this.checkService.serverData.data.id) {
+  onClick(inputValue: string) {
+    let inVal = inputValue.toUpperCase().replace(/-/g, '')
+    this.checkService.getData(inVal)
+    .subscribe(res => {
+        
+        this.checkService.serverData = res;
+        this.checkService.err404 = false;
         this.serverData = this.checkService.serverData;
         this.checkService.searchValue = inVal;
+        console.log(this.checkService.serverData)
+        this.tutu()
 
-        if (this.serverData !== undefined && this.serverData.data.id == inVal && !this.checkService.err404) {
-          this.compare()
+        },
+    (err: Response) => {
+        if (err.status === 404){
+          this.checkService.err404 = err.status;
         }
+        console.log(this.checkService.err404)
+    })
+  
+  }
+
+
+tutu() {
+  
+  console.log("tutu serverdata " + this.serverData.data.id)
+
+          this.compare()
+        
 
         localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
 
-        console.log("onclick")
+       
+    
+}
 
-      }  else if(this.checkService.err404) {
-        this.checkService.err404;
-        console.log('olej wew ' )
-      }else {
-        setTimeout(() => {
-          console.log("test srodek");
-          this.onClick(inputValue)
-        }, 500);
-      }
+  // onClick(inputValue: string): void {
+    // WTFFFFFFFFFFFFF :DDDDDDDDDDDDDDDDDDD
+  //   let inVal = inputValue.toUpperCase().replace(/-/g, '')
+  //   this.checkService.getData(inVal);
+  //   if (this.checkService.serverData) {
 
-    } else if(this.checkService.err404) {
-      this.checkService.err404;
-     console.log('olej zew'+this.checkService.err404)
-    } else {
-      setTimeout(() => {
-        console.log("test na zwenarz");
-        this.onClick(inputValue)
-      }, 500);
-    }
-  }
+  //     if (inVal == this.checkService.serverData.data.id) {
+  //       this.serverData = this.checkService.serverData;
+  //       this.checkService.searchValue = inVal;
+
+  //       if (this.serverData !== undefined && this.serverData.data.id == inVal && !this.checkService.err404) {
+  //         this.compare()
+  //       }
+
+  //       localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
+
+  //       console.log("onclick")
+
+  //     }  else if(this.checkService.err404) {
+  //       this.checkService.err404;
+  //       console.log('olej wew ' )
+  //     }else {
+  //       setTimeout(() => {
+  //         console.log("test srodek");
+  //         this.onClick(inputValue)
+  //       }, 500);
+  //     }
+
+  //   } else if(this.checkService.err404) {
+  //     this.checkService.err404;
+  //    console.log('olej zew'+this.checkService.err404)
+  //   } else {
+  //     setTimeout(() => {
+  //       console.log("test na zwenarz");
+  //       this.onClick(inputValue)
+  //     }, 500);
+  //   }
+  // }
 
 
   // sprawdza czy znajduje sie w bazie  - to bedzie w history component
