@@ -16,79 +16,17 @@
     <span class="input-group-btn">
 <button 
   class='btn btn-primary' 
-  (click)='loadData()' 
-  (click)="saveInput(searchBox.value)"
-  (click)="checkeroni() "
+  (click)="onClick(searchBox.value)"
   [disabled]='!f.valid'
 >Sprawdź</button>
 </span>
-
-
-
   </div>
   <div *ngIf='searchBox.touched && !searchBox.valid' class="alert alert-danger">
     Wpisana wartość nie jest prawidłowa.
   </div>
 </form>
-<div *ngIf="serverData">
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Street  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.HouseNumber  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.PostalCode  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Place  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Type  }}</p>
-  </div>
-<div>
-    <ul>
-      <li *ngFor="let elem of InputValArr"> {{ elem }} </li>
-    </ul> 
-   </div>
-
-<div *ngIf="isActive">
-  
-  <p>
-    check-detail works! 
-  </p>
-  <div class="input-group check-detail-input">
-    <div class="col-md-10">
-      <p>Nazwa</p>
-    <input type="text" class="form-control" value="{{ myJSON }}">  
-    </div>
-    <div class="row">
-      <div class="col-md-6">
-          <p>Ulica</p>
-       
-          <input type="text" class="form-control" placeholder="Ulica">
-        
-      </div>
-      <div class="col-md-4">
-          <p>Numer</p>
-       
-          <input type="text" class="form-control" placeholder="Numer">
-        
-      </div>
-    </div>
-  
-    <div class="row">
-      <div class="col-md-4">
-          <p>Kod Pocztowy</p>
-        
-          <input type="text" class="form-control" placeholder="Kod">
-        
-      </div>
-      <div class="col-md-6">
-          <p>Miasto</p>
-        
-          <input type="text" class="form-control" placeholder="Miasto">
-        
-      </div>
-    </div>
-  
-  </div>
-  <br>
-  
-
-  <!-- <app-check-detail></app-check-detail> -->
+<div *ngIf="this.checkService.err404" class="alert alert-danger">
+  Nie znaleziono numeru.
 </div>
 
 

@@ -1,3 +1,4 @@
+
 import { distinctUntilKeyChanged } from 'rxjs/operator/distinctUntilKeyChanged';
 import { CheckDetailComponent } from './../check-detail/check-detail.component';
 import { HistoryComponent } from './../history/history.component';
@@ -18,111 +19,144 @@ export class CheckComponent implements OnInit {
 
   isActive: boolean;
   serverData;
-  myJSON; 
-  lsData;
-  // storedItems = this.checkService.storedItems;
-  // inputVal: Array <any> = this.checkService.inputValueArr;
+
+  // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
+  // LSDATA = ARRAY POBIERANY Z LOCAL TUTAJ
+  // SERVERDATA = POBIERANE Z SERWERA DANE
+
 
 
   constructor(private checkService: CheckService) { }
 
- // pobiera dane z serwera
-  loadData(): void {
-    // this.checkService.getData().subscribe(data => this.serverData = data);
-    // this.checkService.myJSON = JSON.parse(JSON.stringify(this.serverData || null));
-    // this.myJSON = this.checkService.myJSON;
-    // this.isActive = true;
-    // console.log(this.serverData)
+
+
+  // zapisuje input
+  onClick(inputValue: string): void {
+    let inVal = inputValue.toUpperCase().replace(/-/g, '')
+    this.checkService.getData(inVal);
+    if (this.checkService.serverData) {
+
+      if (inVal == this.checkService.serverData.data.id) {
+        this.serverData = this.checkService.serverData;
+        this.checkService.searchValue = inVal;
+
+        if (this.serverData !== undefined && this.serverData.data.id == inVal && !this.checkService.err404) {
+          this.compare()
+        }
+
+        localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
+
+        console.log("onclick")
+
+      }  else if(this.checkService.err404) {
+        this.checkService.err404;
+        console.log('olej wew ' )
+      }else {
+        setTimeout(() => {
+          console.log("test srodek");
+          this.onClick(inputValue)
+        }, 500);
+      }
+
+    } else if(this.checkService.err404) {
+      this.checkService.err404;
+     console.log('olej zew'+this.checkService.err404)
+    } else {
+      setTimeout(() => {
+        console.log("test na zwenarz");
+        this.onClick(inputValue)
+      }, 500);
+    }
   }
 
-// zapisuje input
-  saveInput(inputValue: string): void {
-    this.checkService.searchValue = inputValue.toUpperCase()
-    this.checkService.getData(inputValue.toUpperCase());
-    this.compare()
-   
-  }
 
-  
-// sprawdza czy duplikat
+  // sprawdza czy znajduje sie w bazie  - to bedzie w history component
   compare() {
-    
-    if 
-      (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue)>-1)
-     {
-      console.log("show storeditems.value ;)")
-     
-      
-     this.serverData = this.checkService.serverData;
-     console.log(this.serverData)
+
+    if
+      (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue) > -1) {
+      console.log("Compare if")
+
       this.update()
+
     } else {
-      this.store() 
-      }
+      console.log('compare else CZYLI STORE OD RAZU')
+      this.store()
+
+    }
   }
 
-// uaktualnia dane w localstorage 
+  // uaktualnia dane w localstorage 
   update() {
-   this.lsData = JSON.parse(localStorage.inputVal);
-    
-    for (let i =0; i < this.lsData.length; i++) {
-      if (this.checkService.searchValue === this.lsData[i].key && this.lsData[i].value === null) {
-        this.lsData[i].value = "witam do testu"
-        break;
+
+    console.log("UPDATE() CZYLI SPR CZY JEST KEY W LOCALSTORATE / STORED ITEMS I PRZYPISUJE DANE")
+
+    for (let i = 0; i < this.checkService.storedItems.length; i++) {
+      if (this.checkService.searchValue === this.checkService.storedItems[i].key) {
+
+        this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;
+
       }
     }
-    localStorage.setItem("inputVal", JSON.stringify(this.lsData))
+
+    localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
   }
 
-// dodaje input do localstorage
-  store(): void {
-    if (this.checkService.storedItems != null){
+  delete() {
+
+  }
+
+
+
+  store() {
     this.checkService.storedItems.push(
-      {key: this.checkService.searchValue,
-      value: null}
-    );
+      {
+        key: this.checkService.searchValue,
+        value: null
+      });
+    this.update()
+  }
+  // dodaje input do localstorage
+  // store(): void {
+
+  //   if (this.checkService.storedItems == null) {
+
+  //     this.checkService.storedItems.push(
+  //       {
+  //         key: this.checkService.searchValue,
+  //         value: null
+  //       });
+  //     this.update()
+  //     console.log("store if CZYLI DODAJ PUSTY DO STORED ITEMS I DAJ UPDATE")
+
+  //   } else {
+
+  //     console.log("store else CZYLI NIC LOL")
+
+  //   }
+
+  // }
+
+
+  //pobiera dane z LS do array
+  getDataFromLS(): void {
+
+    if (window.localStorage.hasOwnProperty('inputVal')) {
+      this.checkService.storedItems = JSON.parse(localStorage.getItem('inputVal'));
+
+
     } else {
-      this.checkService.storedItems = [this.checkService.searchValue];
-    }
-
-    localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
-  }
-
-  
-
-    //pobiera dane z LS do array
-   getDataFromLS(): void {
-
-     if (window.localStorage.hasOwnProperty('inputVal')) {
-      this.checkService.storedItems = JSON.parse(localStorage.getItem('inputVal')); 
-      
-     } else {
       this.checkService.storedItems = [];
-      }
     }
 
-  checkeroni(): void {
-    // console.log("storedItems CHECKservice " + this.checkService.storedItems);
-    // console.log("searchValue " + this.checkService.searchValue);
   }
-  
 
 
   ngOnInit() {
-    
-    this.getDataFromLS();
-    this.checkeroni();
-    
-   
-}
-}
-/*
-0. pobierany jest localstorage
-1 koles wpisuje input 
-2. input jest porownywany z localstorage
-2.1 if input == for loop localstorage[i] { return te dane}
-2.2 if input jest nowy wtedy odpalamy getData() z serwera
-2.3 zapisujemy ten input razem z wynikiem chyba najlepiej bedzie jako array obiektow [{NIP: { wszystkie dane }}, {NIP2: { wszystkie dane}}]
-*/
 
-// Robimy tego brojona tzn pobieramy z serwera tak jak router zeby pokazal ladnie obiekt a nie promise
+    this.getDataFromLS();
+
+
+  }
+}
+

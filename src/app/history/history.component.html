@@ -6,11 +6,10 @@
     <li *ngFor="let elem of storedItems" >
     <a [routerLink]="['/detail', elem.key] "class="element col-1-4"> {{ elem.key }} 
     </a>
-    <button class="btn btn-danger btn-cancel">X</button>
+    <button class="btn btn-danger btn-cancel"(click)="delete(elem.key)">X</button>
     </li>
   </ul>
 </div>
-<!-- <app-history-detail></app-history-detail> -->
 
 <button (click)='tester()' class="btn btn-default"> Log</button>
 <button (click)='reset()'class="btn btn-danger"> Wyczyść Historię</button>

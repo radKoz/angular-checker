@@ -12,9 +12,11 @@ import 'rxjs/add/operator/switchMap';
   styleUrls: ['./history-detail.component.css']
 })
 export class HistoryDetailComponent implements OnInit {
-storedItemon;
-testData;
-companyInfo;
+storedItems;
+serverData;
+item;
+noData = ""
+key;
   constructor(
     private checkService: CheckService,
     private route: ActivatedRoute,
@@ -22,19 +24,35 @@ companyInfo;
   ) { }
 
   ngOnInit() {
-
+    this.serverData = this.checkService.serverData;
     this.route.paramMap
-      .switchMap((params: ParamMap) => this.checkService.getItem(params.get('key')))
-      .subscribe(storedItem => this.storedItemon = storedItem);
+    .subscribe(params => {
+      this.key = params.get('key')
+      this.serverData = this.checkService.serverData;
+      
+      if (this.checkService.storedItems.findIndex(x => x.key === this.key) > -1) {
+        for (let i = 0; i < this.checkService.storedItems.length; i++) {
+          if (this.key == this.checkService.storedItems[i].key) {
+            // console.log(this.key + " w logu")
+           this.item = this.checkService.storedItems[i]
+            // console.log(this.item.key + " w logu")
+            // console.log(this.checkService.storedItems[i])
+          }
+        }
+    
+      } else {
+        this.noData = "Brak w bazie danych";
+      }
+    //  console.log("KEY "+this.key)
+    //  console.log("ITEM "+this.item.Name)
+     
+    })
+  this.teston()
   }
 
   teston() {
-    const brokje = this.checkService.getItem(this.checkService.searchValue)
-    
-    
-      console.log(brokje)
-
-
+    console.log(this.key + " pppppw logu")
+    console.log(this.item.key + " ppppppw logu")
   }  
 
 }

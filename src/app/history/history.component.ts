@@ -7,43 +7,51 @@ import { Component, OnInit, Input } from '@angular/core';
   selector: 'app-history',
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.css'],
-  providers:[CheckComponent]
+  providers: [CheckComponent]
 })
 
 export class HistoryComponent implements OnInit {
 
   // inputVal: Array <any> = this.checkService.inputValueArr
   // newestElement = ' ';
-  @Input() storedItems;
- 
+ storedItems;
+
 
 
   constructor(private checkService: CheckService,
-    private checkComponent: CheckComponent) {   }
+    private checkComponent: CheckComponent) { }
 
+
+delete(id: string) {
+  this.storedItems = this.checkService.storedItems;
   
-    // showValue() {
-    //   if (this.storedItems.value === null) {
-
-    //   }
-    // }
-
-    tester() {
-
-      console.log("storedItems " + this.storedItems)
-
+      for (let i = 0; i < this.checkService.storedItems.length; i++) {
+        if (id === this.checkService.storedItems[i].key) {
+  
+         this.checkService.storedItems.splice(i, 1);
+  
+        }
+      }
+  
+      localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
     }
 
-    reset() {
-      localStorage.clear();
-      location.reload();
-    }
+  tester() {
+
+    console.log("storedItems " + this.storedItems)
+
+  }
+
+  reset() {
+    localStorage.clear();
+    location.reload();
+  }
 
 
-    ngOnInit() {
-    
-     this.storedItems = this.checkService.storedItems;
-    }
+  ngOnInit() {
+
+    this.storedItems = this.checkService.storedItems;
+  }
 
 
 

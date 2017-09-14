@@ -1,11 +1,25 @@
-<p>
-  history-detail works!
-</p>
-<div *ngIf="serverData">
-  <p>{{ serverData.data.value.CompanyInformation  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
-  <p>{{ serverData.data.value.CompanyInformation.Name  }}</p>
+
+<!-- <div *ngIf="item"value.>
+<div class="container">
+  <div class="col-md-6 offset-md-6 details">
+  <p>{{ item.value.Name  }}</p>
+  <p>{{ item.value.Street  }} {{ item.value.HouseNumber  }}</p>
+ 
+  <p>{{ item.value.PostalCode  }} {{ item.value.Place  }}</p>
+  <p></p>
+  <p>{{ item.value.Type  }}</p>
+  </div>
+</div>
+</div> -->
+<div *ngIf="item.key === key">
+  <div class="container">
+    <div class="col-md-6 offset-md-6 details">
+    <p>{{ item.value.Name  }}</p>
+    <p>{{ item.value.Street  }} {{ item.value.HouseNumber  }}</p>
+   
+    <p>{{ item.value.PostalCode  }} {{ item.value.Place  }}</p>
+    <p></p>
+    <p>{{ item.key  }}</p>
+    </div>
+  </div>
   </div>
