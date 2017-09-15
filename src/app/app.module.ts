@@ -16,6 +16,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
 
 import { InMemoryDataService }  from './in-memory-data.service';
+import { LoaderComponent } from './shared/loader/loader.component';
 
 
 
@@ -26,6 +27,7 @@ import { InMemoryDataService }  from './in-memory-data.service';
     HistoryComponent,
     CheckDetailComponent,
     HistoryDetailComponent,
+    LoaderComponent,
     
   ],
   imports: [

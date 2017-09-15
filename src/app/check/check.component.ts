@@ -19,11 +19,12 @@ export class CheckComponent implements OnInit {
 
   isActive: boolean;
   serverData;
-
+isInHistory: boolean;
   // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
   // LSDATA = ARRAY POBIERANY Z LOCAL TUTAJ
   // SERVERDATA = POBIERANE Z SERWERA DANE
-
+  loading: boolean = false;
+  
 
 
   constructor(private checkService: CheckService) { }
@@ -33,79 +34,56 @@ export class CheckComponent implements OnInit {
   // zapisuje input
 
   onClick(inputValue: string) {
+    console.log(this.checkService.storedItems)
     let inVal = inputValue.toUpperCase().replace(/-/g, '')
-    this.checkService.getData(inVal)
-    .subscribe(res => {
-        
-        this.checkService.serverData = res;
-        this.checkService.err404 = false;
-        this.serverData = this.checkService.serverData;
-        this.checkService.searchValue = inVal;
-        console.log(this.checkService.serverData)
-        this.tutu()
-
-        },
-    (err: Response) => {
-        if (err.status === 404){
-          this.checkService.err404 = err.status;
-        }
-        console.log(this.checkService.err404)
-    })
-  
-  }
-
-
-tutu() {
-  
-  console.log("tutu serverdata " + this.serverData.data.id)
-
-          this.compare()
-        
-
-        localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
-
-       
+    this.loading = true;
     
+// sprawdza czy dane są już w historii
+    if (this.checkService.storedItems.findIndex(x => x.key === inVal) > -1 && this.checkService.storedItems.findIndex(x => x.value) > -1 ) {
+console.log("witam")
+   this.update()
+      this.isInHistory = true;
+      this.loading = false;
+} else {
+  
+  this.isInHistory = false;
+  this.checkService
+  .getData(inVal)
+  .subscribe(res => {
+    this.loading = true;
+    this.checkService.serverData = res;
+    this.checkService.err404 = false;
+    this.serverData = this.checkService.serverData;
+    this.checkService.searchValue = inVal;
+    console.log(this.checkService.serverData)
+
+    this.afterServerGet()
+    this.loading = false;
+    
+  },
+  (err: Response) => {
+    if (err.status === 404) {
+      this.checkService.err404 = err.status;
+    }
+    console.log(this.checkService.err404)
+  }), () =>this.loading = false
+
+} 
 }
 
-  // onClick(inputValue: string): void {
-    // WTFFFFFFFFFFFFF :DDDDDDDDDDDDDDDDDDD
-  //   let inVal = inputValue.toUpperCase().replace(/-/g, '')
-  //   this.checkService.getData(inVal);
-  //   if (this.checkService.serverData) {
 
-  //     if (inVal == this.checkService.serverData.data.id) {
-  //       this.serverData = this.checkService.serverData;
-  //       this.checkService.searchValue = inVal;
+  afterServerGet() {
 
-  //       if (this.serverData !== undefined && this.serverData.data.id == inVal && !this.checkService.err404) {
-  //         this.compare()
-  //       }
+    console.log("tutu serverdata " + this.serverData.data.id)
 
-  //       localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
+    this.compare()
 
-  //       console.log("onclick")
 
-  //     }  else if(this.checkService.err404) {
-  //       this.checkService.err404;
-  //       console.log('olej wew ' )
-  //     }else {
-  //       setTimeout(() => {
-  //         console.log("test srodek");
-  //         this.onClick(inputValue)
-  //       }, 500);
-  //     }
+    localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
 
-  //   } else if(this.checkService.err404) {
-  //     this.checkService.err404;
-  //    console.log('olej zew'+this.checkService.err404)
-  //   } else {
-  //     setTimeout(() => {
-  //       console.log("test na zwenarz");
-  //       this.onClick(inputValue)
-  //     }, 500);
-  //   }
-  // }
+
+
+  }
 
 
   // sprawdza czy znajduje sie w bazie  - to bedzie w history component
@@ -140,9 +118,7 @@ tutu() {
     localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
   }
 
-  delete() {
 
-  }
 
 
 
@@ -154,26 +130,7 @@ tutu() {
       });
     this.update()
   }
-  // dodaje input do localstorage
-  // store(): void {
 
-  //   if (this.checkService.storedItems == null) {
-
-  //     this.checkService.storedItems.push(
-  //       {
-  //         key: this.checkService.searchValue,
-  //         value: null
-  //       });
-  //     this.update()
-  //     console.log("store if CZYLI DODAJ PUSTY DO STORED ITEMS I DAJ UPDATE")
-
-  //   } else {
-
-  //     console.log("store else CZYLI NIC LOL")
-
-  //   }
-
-  // }
 
 
   //pobiera dane z LS do array
@@ -198,3 +155,5 @@ tutu() {
   }
 }
 
+
+// tylko zostal wyglad? + animacje loadery + sprawdzenie api +rwd + wyczyszczenie kodu + najnudniejsze przeniesienie do history

@@ -28,5 +28,11 @@
 <div *ngIf="this.checkService.err404" class="alert alert-danger">
   Nie znaleziono numeru.
 </div>
+<div *ngIf="this.isInHistory" class="alert alert-danger">
+  Numer znaduje się już w historii.
+</div>
 
 
+<div class="center">
+  <app-loader [loading]="loading"></app-loader>
+</div>
