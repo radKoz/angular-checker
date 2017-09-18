@@ -1,7 +1,10 @@
 .component {
     margin-top: 20px;
+    margin-bottom: 20px;
 }
-
+.same-height {
+    min-height: 210px;
+  }
 
 md-card-title {
     text-align: left;
@@ -22,3 +25,4 @@ p {
     text-align: left;
     padding: 5px;
 }
+

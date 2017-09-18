@@ -1,43 +1,18 @@
 
-<!-- <div *ngIf="item"value.>
-<div class="container">
-  <div class="col-md-6 offset-md-6 details">
-  <p>{{ item.value.Name  }}</p>
-  <p>{{ item.value.Street  }} {{ item.value.HouseNumber  }}</p>
- 
-  <p>{{ item.value.PostalCode  }} {{ item.value.Place  }}</p>
-  <p></p>
-  <p>{{ item.value.Type  }}</p>
-  </div>
-</div>
-</div> -->
-<!-- <div *ngIf="item.key === key">
-  <div class="container">
-    <div class="col-md-6 offset-md-6 details">
-    <p>{{ item.value.Name  }}</p>
-    <p>{{ item.value.Street  }} {{ item.value.HouseNumber  }}</p>
-   
-    <p>{{ item.value.PostalCode  }} {{ item.value.Place  }}</p>
-    <p></p>
-    <p>{{ item.key  }}</p>
-    </div>
-  </div>
-  </div> -->
 <div class="component">
-  <md-card *ngIf="item.key === key">
-<md-card-header>
-  <md-card-title> {{ item.key }} </md-card-title>
-</md-card-header>
-  <md-card-title>
-      {{ item.value.Name  }}
-  </md-card-title>
-  <md-card-content class="details">
-     
-      <p>{{ item.value.Street  }} {{ item.value.HouseNumber  }}</p>
-     
-      <p>{{ item.value.PostalCode  }} {{ item.value.Place  }}</p>
-      <p></p>
-   
-  </md-card-content>
-</md-card>
+  <md-card *ngIf="item.key === key" class="same-height">
+    <md-card-header>
+      <md-card-title> {{ item.key }} </md-card-title>
+    </md-card-header>
+    <md-card-title>
+      {{ item.value.Name }}
+    </md-card-title>
+    <md-card-content class="details">
+
+      <p>{{ item.value.Street }} {{ item.value.HouseNumber }}</p>
+
+      <p>{{ item.value.PostalCode }} {{ item.value.Place }}</p>
+
+    </md-card-content>
+  </md-card>
 </div>

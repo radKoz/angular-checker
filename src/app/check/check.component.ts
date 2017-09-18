@@ -19,12 +19,12 @@ export class CheckComponent implements OnInit {
 
   isActive: boolean;
   serverData;
-isInHistory: boolean;
+  isInHistory: boolean;
   // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
   // LSDATA = ARRAY POBIERANY Z LOCAL TUTAJ
   // SERVERDATA = POBIERANE Z SERWERA DANE
   loading: boolean = false;
-  
+
 
 
   constructor(private checkService: CheckService) { }
@@ -34,73 +34,79 @@ isInHistory: boolean;
   // zapisuje input
 
   onClick(inputValue: string) {
-    console.log(this.checkService.storedItems)
+    // console.log(this.checkService.storedItems)
+
     let inVal = inputValue.toUpperCase().replace(/-/g, '')
+
     this.loading = true;
+
+    // sprawdza czy dane są już w historii
     
-// sprawdza czy dane są już w historii
-    if (this.checkService.storedItems.findIndex(x => x.key === inVal) > -1 && this.checkService.storedItems.findIndex(x => x.value) > -1 ) {
-console.log("witam")
-   this.update()
+    if (this.checkService.storedItems.findIndex(x => x.key === inVal) > -1 && this.checkService.storedItems.findIndex(x => x.value) > -1) {
+
+      // console.log("onclick if")
+      this.update()
       this.isInHistory = true;
       this.loading = false;
       this.checkService.err404 = false;
-} else {
-  this.loading = true;
-  this.isInHistory = false;
-  this.checkService
-  
-  .getData(inVal)
-  .subscribe(res => {
-   
-    this.checkService.serverData = res;
-    this.checkService.err404 = false;
-    this.serverData = this.checkService.serverData;
-    this.checkService.searchValue = inVal;
-    console.log(this.checkService.serverData)
 
-    this.afterServerGet()
-    this.loading = false;
-    
-  },
-  (err: Response) => {
-   
-    if (err.status === 404) {
-      this.checkService.err404 = err.status;
-      this.loading = false
+    } else {
+
+      this.loading = true;
+      this.isInHistory = false;
+
+      this.checkService
+        .getData(inVal)
+        .subscribe(res => {
+
+          this.checkService.serverData = res;
+          this.checkService.err404 = false;
+          this.serverData = this.checkService.serverData;
+          this.checkService.searchValue = inVal;
+
+          // console.log(this.checkService.serverData)
+
+          this.afterServerGet()
+          this.loading = false;
+
+        },
+        (err: Response) => {
+
+          if (err.status === 404) {
+
+            this.checkService.err404 = err.status;
+            this.loading = false
+          }
+
+          console.log(this.checkService.err404)
+
+        }), () => this.loading = false
+
     }
-    console.log(this.checkService.err404)
-  }), () =>this.loading = false
+  }
 
-} 
-}
+
 
 
   afterServerGet() {
-  
-    console.log("tutu serverdata " + this.serverData.data.id)
+    // console.log("tutu serverdata " + this.serverData.data.id)
 
     this.compare()
 
-
     localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
-
-
-
   }
-
 
   // sprawdza czy znajduje sie w bazie  - to bedzie w history component
   compare() {
 
     if
       (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue) > -1) {
-      console.log("Compare if")
+      // console.log("Compare if")
 
       this.update()
 
     } else {
-      console.log('compare else CZYLI STORE OD RAZU')
+      // console.log('compare else CZYLI STORE OD RAZU')
       this.store()
 
     }
@@ -122,10 +128,6 @@ console.log("witam")
     localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
   }
 
-
-
-
-
   store() {
     this.checkService.storedItems.push(
       {
@@ -134,8 +136,6 @@ console.log("witam")
       });
     this.update()
   }
-
-
 
   //pobiera dane z LS do array
   getDataFromLS(): void {
@@ -150,7 +150,6 @@ console.log("witam")
 
   }
 
-
   ngOnInit() {
 
     this.getDataFromLS();
@@ -158,6 +157,3 @@ console.log("witam")
 
   }
 }
-
-
-// tylko zostal wyglad? + animacje loadery + sprawdzenie api +rwd + wyczyszczenie kodu + najnudniejsze przeniesienie do history

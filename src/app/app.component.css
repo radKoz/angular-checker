@@ -1,18 +1,30 @@
 
 .main-wrapper {
   margin-top: 0;
-  height: 100vh;
+  min-height: calc(100vh - 20px);
   background-image: url("/assets/images/fabric_of_squares_gray_@2X.png")
 }
 
 h1 {
+  font-size: 1.2em;
+  font-weight: bold;
   margin-top: 0;
   padding-top: 20px;
   padding-bottom: 20px;
   border-bottom: 1px dotted black;
 }
 
+.hint {
+  font-family: "Roboto", sans-serif;
+  font-size: 0.9em;
+  font-style: italic;
+  
+}
+
+
 footer {
-  margin-top: 20px;
+  color: rgb(46, 46, 46);
   text-align: center;
+  background-image: url("/assets/images/fabric_of_squares_gray.png");
+  height: 20px;
 }

@@ -1,37 +1,50 @@
-.form-container { 
-    margin: 0
+.same-height {
+  min-height: 210px;
 }
 
 .full-width {
-   min-width: 100%;
-   
+  min-width: 100%;
+}
+
+.form-container {
+  margin: 0
+}
+
+@media( max-width: 360px) {
+  .full-width {
+    width: auto;
+  }
+}
+
+#searchBox {
+    font-size: 1.2em;
 }
 
 .center {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
+
 app-loader {
-    margin: auto;
+  margin: auto;
 }
 
 .alert-danger {
-    color: white;
-    background-color: rgba(244, 67, 54, 0.8);
-    
+  color: white;
+  background-color: rgba(244, 67, 54, 0.8);
 }
 
+
 /* wylaczenie zoltego tla autofill */
+
 input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus
-input:-webkit-autofill, 
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus input:-webkit-autofill,
 textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover
-textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:hover textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
-  border:none !important;
+  border: none !important;
   transition: background-color 5000s ease-in-out 0s;
 }

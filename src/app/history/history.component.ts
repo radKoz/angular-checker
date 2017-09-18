@@ -2,6 +2,7 @@ import { CheckService } from './../check.service';
 import { CheckComponent } from './../check/check.component';
 
 import { Component, OnInit, Input } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-history',
@@ -12,14 +13,16 @@ import { Component, OnInit, Input } from '@angular/core';
 
 export class HistoryComponent implements OnInit {
 
-  // inputVal: Array <any> = this.checkService.inputValueArr
-  // newestElement = ' ';
- storedItems;
+
+ storedItems: Array<Object>;
 
 
 
-  constructor(private checkService: CheckService,
-    private checkComponent: CheckComponent) { }
+  constructor(
+    private checkService: CheckService,
+    private checkComponent: CheckComponent,
+    private location: Location
+  ) { }
 
 
 delete(id: string) {
@@ -43,7 +46,7 @@ delete(id: string) {
   }
 
   reset() {
-    // location.origin;
+    this.location.go('/')
     localStorage.clear();
     location.reload();
     

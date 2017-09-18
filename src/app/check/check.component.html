@@ -1,5 +1,5 @@
-<md-card>
-<md-card-title> Sprawdzacz</md-card-title>
+<md-card class="same-height">
+<md-card-title>Wpisz numer</md-card-title>
 
 <form #f="ngForm" class="form-container">
   <!-- <label for='searchBox'></label><br> -->
@@ -23,7 +23,7 @@
         </md-error>
     </md-form-field>
     <span class="input-group-btn">
-<button md-raised-button color="primary"
+<button md-raised-button color="primary" class="btn-check"
   (click)="onClick(searchBox.value)"
   [disabled]='!f.valid'
 >Sprawdź</button>
