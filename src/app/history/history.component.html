@@ -1,15 +1,25 @@
-<h1> Historia</h1>
-<p *ngIf="!this.checkService.isNotEmpty"> Brak Historii<p>
+<md-card>
+<md-card-title> Historia</md-card-title>
+
 
 <div>
-  <ul>
-    <li *ngFor="let elem of storedItems" >
-    <a [routerLink]="['/detail', elem.key] "class="element col-1-4"> {{ elem.key }} 
-    </a>
-    <button class="btn btn-danger btn-cancel"(click)="delete(elem.key)">X</button>
-    </li>
-  </ul>
+   
+  <md-nav-list >
+    <md-card-subtitle *ngIf="storedItems.length == 0" >Brak Historii</md-card-subtitle>
+      <md-card *ngIf="storedItems.length != 0"  > 
+        <md-card-content  >
+    <md-list-item *ngFor="let elem of storedItems" >
+    <a mdLine [routerLink]="['/detail', elem.key] "class="element "> {{ elem.key }} </a>
+    <button md-mini-fab color="warn" class="btn btn-cancel" (click)="delete(elem.key)"> <md-icon>delete_forever</md-icon></button>
+    </md-list-item>
+  </md-card-content>
+  </md-card>
+  </md-nav-list>
+
 </div>
 
-<button (click)='tester()' class="btn btn-default"> Log</button>
-<button (click)='reset()'class="btn btn-danger"> Wyczyść Historię</button>
+<button md-raised-button (click)='tester()' > Log</button>
+<button md-raised-button color="warn" (click)='reset()'> Wyczyść Historię</button>
+</md-card>
+<!-- 
+class="btn btn-default" -->

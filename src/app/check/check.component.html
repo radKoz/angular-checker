@@ -1,29 +1,42 @@
-<h1> Sprawdzacz</h1>
-<form #f="ngForm" >
-  <label for='searchBox'>NIP/KRS/REGON</label><br>
-  <div class='form-group input-group'>
-    <input 
-    required 
-    minlength="9" 
-    pattern="(([KRS])?([PL])?[\-0-9KRSPLkrspl]*)" 
-    ngModel 
-    name="searchBox" 
-    #searchBox="ngModel" 
-    id="searchBox"
-    type="text" 
-    class="form-control" 
-    placeholder='Wpisz numer' />
+<md-card>
+<md-card-title> Sprawdzacz</md-card-title>
+
+<form #f="ngForm" class="form-container">
+  <!-- <label for='searchBox'></label><br> -->
+  <div class='input-group'>
+    <md-form-field class="full-width">
+
+      <input
+        required minlength="9"
+        pattern="(([KRS])?([PL])?[\-0-9KRSPLkrspl]*)" 
+        ngModel 
+        name="searchBox" 
+        #searchBox="ngModel"
+        id="searchBox" 
+        type="text" 
+       
+        mdInput 
+        placeholder='NIP/KRS/REGON' />
+
+        <md-error *ngIf='searchBox.touched && !searchBox.valid' class="">
+          Wpisana wartość nie jest prawidłowa.
+        </md-error>
+    </md-form-field>
     <span class="input-group-btn">
-<button 
-  class='btn btn-primary' 
+<button md-raised-button color="primary"
   (click)="onClick(searchBox.value)"
   [disabled]='!f.valid'
 >Sprawdź</button>
 </span>
+
   </div>
-  <div *ngIf='searchBox.touched && !searchBox.valid' class="alert alert-danger">
-    Wpisana wartość nie jest prawidłowa.
+
+  <div class="center" *ngIf="loading">
+    <app-loader [loading]="loading"></app-loader>
   </div>
+
+
+
 </form>
 <div *ngIf="this.checkService.err404" class="alert alert-danger">
   Nie znaleziono numeru.
@@ -31,8 +44,4 @@
 <div *ngIf="this.isInHistory" class="alert alert-danger">
   Numer znaduje się już w historii.
 </div>
-
-
-<div class="center">
-  <app-loader [loading]="loading"></app-loader>
-</div>
+</md-card>

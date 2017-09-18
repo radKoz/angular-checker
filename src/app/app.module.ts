@@ -1,3 +1,5 @@
+
+
 import { CheckService } from './check.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -9,7 +11,9 @@ import { CheckDetailComponent } from './check-detail/check-detail.component';
 import { HistoryDetailComponent } from './history-detail/history-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from "./app-routing.module";
-
+// material
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MdButtonModule, MdInputModule, MdProgressSpinnerModule, MdListModule, MdIconModule, MdCardModule, MdExpansionModule } from '@angular/material';
 
 // web API Simulation 
 
@@ -36,6 +40,14 @@ import { LoaderComponent } from './shared/loader/loader.component';
     FormsModule,
     AppRoutingModule,
     InMemoryWebApiModule.forRoot(InMemoryDataService),
+    BrowserAnimationsModule,
+    MdButtonModule,
+    MdInputModule,
+    MdProgressSpinnerModule,
+    MdListModule,
+    MdIconModule,
+    MdCardModule,
+    MdExpansionModule
   
   ],
   providers: [

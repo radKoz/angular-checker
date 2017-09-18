@@ -1,13 +1,37 @@
-
-.check-detail-input> div, p, input {
-    margin: 0;
-    padding: 0;
+.form-container { 
+    margin: 0
 }
 
-.check-detail-input > input {
-    margin: 0;
-    padding: 0;
-    font-size: 40px;
-    padding: 5px;
-    margin: 5px;
+.full-width {
+   min-width: 100%;
+   
+}
+
+.center {
+    display: flex;
+    flex-direction: row;
+}
+app-loader {
+    margin: auto;
+}
+
+.alert-danger {
+    color: white;
+    background-color: rgba(244, 67, 54, 0.8);
+    
+}
+
+/* wylaczenie zoltego tla autofill */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus
+input:-webkit-autofill, 
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border:none !important;
+  transition: background-color 5000s ease-in-out 0s;
 }

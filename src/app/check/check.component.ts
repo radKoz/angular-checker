@@ -44,13 +44,15 @@ console.log("witam")
    this.update()
       this.isInHistory = true;
       this.loading = false;
+      this.checkService.err404 = false;
 } else {
-  
+  this.loading = true;
   this.isInHistory = false;
   this.checkService
+  
   .getData(inVal)
   .subscribe(res => {
-    this.loading = true;
+   
     this.checkService.serverData = res;
     this.checkService.err404 = false;
     this.serverData = this.checkService.serverData;
@@ -62,8 +64,10 @@ console.log("witam")
     
   },
   (err: Response) => {
+   
     if (err.status === 404) {
       this.checkService.err404 = err.status;
+      this.loading = false
     }
     console.log(this.checkService.err404)
   }), () =>this.loading = false
@@ -73,7 +77,7 @@ console.log("witam")
 
 
   afterServerGet() {
-
+  
     console.log("tutu serverdata " + this.serverData.data.id)
 
     this.compare()

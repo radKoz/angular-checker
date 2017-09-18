@@ -38,13 +38,15 @@ delete(id: string) {
 
   tester() {
 
-    console.log("storedItems " + this.storedItems)
+    console.log(this.storedItems)
 
   }
 
   reset() {
+    // location.origin;
     localStorage.clear();
     location.reload();
+    
   }
 
 

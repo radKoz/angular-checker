@@ -1,18 +1,20 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!
-  </h1>
+<div class="main-wrapper">
+  <div style="text-align:center">
+    <h1>
+      Aplikacja do pobierania danych z API po podaniu numeru
+    </h1>
+  </div>
   <div class="container">
     <div class='col-md-6'>
-<app-check></app-check>
+      <app-check></app-check>
     </div>
     <div class='col-md-6 col-xs-12'>
-<app-history></app-history>
-<router-outlet></router-outlet>
-<a routerLink="/history">History</a>
-<router-outlet></router-outlet>
-  </div>
+      <app-history></app-history>
+      <router-outlet></router-outlet>
+
+    </div>
 
   </div>
   <footer> &copy; 2017 Radosław Kozłowski. Wszelkie prawa zastrzeżone.</footer>
+</div>
