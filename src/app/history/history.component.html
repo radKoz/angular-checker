@@ -17,9 +17,7 @@
 
 
   <div class="right">
-    <!-- <button md-raised-button (click)='tester()'> Log</button> -->
-    <button md-raised-button color="warn" (click)='reset()' class="reset-button"> Wyczyść Historię</button>
+    <button md-raised-button color="warn" (click)='reset()' class="reset-button"  [disabled]='storedItems.length == 0' > Wyczyść Historię</button>
   </div>
 </md-card>
-<!-- 
-class="btn btn-default" -->
+

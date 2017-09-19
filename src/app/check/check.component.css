@@ -21,6 +21,7 @@
   font-size: 1.2em;
 }
 
+
 /* .center {
   display: flex;
   flex-direction: row;
@@ -38,6 +39,15 @@ app-loader {
 .alert-danger {
   color: white;
   background-color: rgba(244, 67, 54, 0.8);
+}
+
+.btn-check:disabled {
+  background-color: rgba(103, 58, 183, 0.4);
+  color: white;
+}
+
+.btn-check:disabled:hover {
+  cursor: not-allowed;
 }
 
 

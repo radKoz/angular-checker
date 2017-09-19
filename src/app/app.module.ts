@@ -18,11 +18,10 @@ import { MdButtonModule, MdInputModule, MdProgressSpinnerModule, MdListModule, M
 // web API Simulation 
 
 import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
-
 import { InMemoryDataService }  from './in-memory-data.service';
 
-import { LoaderComponent } from './shared/loader/loader.component';
 
+import { LoaderComponent } from './shared/loader/loader.component';
 
 
 @NgModule({

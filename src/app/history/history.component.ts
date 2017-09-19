@@ -1,5 +1,4 @@
 import { CheckService } from './../check.service';
-import { CheckComponent } from './../check/check.component';
 
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
@@ -7,8 +6,7 @@ import { Location } from '@angular/common';
 @Component({
   selector: 'app-history',
   templateUrl: './history.component.html',
-  styleUrls: ['./history.component.css'],
-  providers: [CheckComponent]
+  styleUrls: ['./history.component.css']
 })
 
 export class HistoryComponent implements OnInit {
@@ -19,14 +17,8 @@ export class HistoryComponent implements OnInit {
 
   constructor(
     private checkService: CheckService,
-    private checkComponent: CheckComponent,
     private location: Location
   ) { }
-
-
-
-  
-
 
 
   delete(id: string) {
@@ -45,9 +37,12 @@ export class HistoryComponent implements OnInit {
 
 
   reset() {
+    if (confirm("Czy napewno chcesz skasować całą historię?") == true) {
     this.location.go('/')
     localStorage.clear();
     location.reload();
+    }
+
   }
 
 

@@ -14,10 +14,11 @@ import { CheckService } from './../check.service';
 })
 
 export class CheckComponent implements OnInit {
+
   // dane z serwera
   serverData;
 
-  // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
+  // storedItems - array w checkService ze wszystim
 
   // progress spiner
   loading: boolean = false;
@@ -28,10 +29,10 @@ export class CheckComponent implements OnInit {
 
   constructor(private checkService: CheckService, private router: Router) { }
 
- 
+
 
   onClick(inputValue: string) {
- // zapisuje input
+    // zapisuje input
     let inVal = inputValue.toUpperCase().replace(/-/g, '')
 
     this.loading = true;
@@ -62,12 +63,9 @@ export class CheckComponent implements OnInit {
     this.checkService
       .getData(inVal)
       .subscribe(res => {
-        //api aveneo
-        // this.checkService.serverError = false;
-        // if (res.CompanyInformation != null) {
         // Router
         this.router.navigate(['/detail', inVal]);
-        
+
         this.checkService.serverData = res;
         this.checkService.err404 = false;
         this.serverData = this.checkService.serverData;
@@ -75,11 +73,6 @@ export class CheckComponent implements OnInit {
 
         this.afterServerGet();
         this.loading = false;
-        //api aveneo
-        // } else {
-        //   this.loading = false
-        //   this.checkService.err404 = true;
-        // }
       }, (err: Response) => {
         if (err.status === 404) {
           this.checkService.err404 = err.status;
@@ -124,9 +117,6 @@ export class CheckComponent implements OnInit {
     // spr czy key jest w localstorage i przypisuje do niego value
     for (let i = 0; i < this.checkService.storedItems.length; i++) {
       if (this.checkService.searchValue === this.checkService.storedItems[i].key) {
-
-        //aveneo
-        // this.checkService.storedItems[i].value = this.serverData.CompanyInformation;
 
         //fake data
         this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;

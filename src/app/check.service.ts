@@ -3,7 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 // obs operators
-import {Observable } from 'rxjs'; 
+import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 // import 'rxjs/add/operator/toPromise';
 
@@ -18,40 +18,36 @@ import 'rxjs/add/operator/map';
 export class CheckService implements OnInit {
 
 
-storedItems: Array<any>; 
-storedItem;
+    storedItems: Array<any>;
+    storedItem;
 
 
-searchValue: string;
-isNotEmpty: boolean;
+    searchValue: string;
+    isNotEmpty: boolean;
 
-serverData;
-err404;
-serverError: boolean;
+    serverData;
+    err404;
+    serverError: boolean;
 
- // fake server
-private serverDataUrl = 'api/fakeServerData'
-
-
+    // fake server
+    private serverDataUrl = 'api/fakeServerData'
 
 
-constructor(private http: Http) {}
 
 
-ngOnInit() {
-   
-}
+    constructor(private http: Http) { }
 
 
-getData(key: string){
-    // let url = `http://ihaveanidea.aveneo.pl/NIPAPI/api/Company?CompanyId=${key}`
-    // console.log("detailitem " + this.searchValue)
-    
-    // fake url
-    let url = `${this.serverDataUrl}/${key}`;
-     console.log(url)
-    return this.http.get(url)
-        .map(res => res.json())
-}
+    ngOnInit() {
+
+    }
+
+
+    getData(key: string) {
+        // fake url
+        let url = `${this.serverDataUrl}/${key}`;
+        return this.http.get(url)
+            .map(res => res.json())
+    }
 
 }

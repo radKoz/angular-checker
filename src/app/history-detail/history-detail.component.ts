@@ -12,7 +12,6 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class HistoryDetailComponent implements OnInit {
-  storedItems;
   serverData;
   item;
   key;
@@ -36,7 +35,7 @@ export class HistoryDetailComponent implements OnInit {
       .subscribe(params => {
 
         this.key = params.get('key')
-        
+
         this.serverData = this.checkService.serverData;
 
         if (this.checkService.storedItems.findIndex(x => x.key === this.key) > -1) {
@@ -57,9 +56,6 @@ export class HistoryDetailComponent implements OnInit {
 
       }
       )
-  }
-  tester() {
-
   }
 
 }
