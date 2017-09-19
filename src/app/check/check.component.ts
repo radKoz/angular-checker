@@ -27,7 +27,7 @@ export class CheckComponent implements OnInit {
   isInHistory: boolean;
   serverError: boolean;
 
-  constructor(private checkService: CheckService, private router: Router) { }
+  constructor(public checkService: CheckService, public router: Router) { }
 
 
 
