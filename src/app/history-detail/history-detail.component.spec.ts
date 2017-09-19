@@ -1,8 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { HistoryDetailComponent } from './history-detail.component';
+import { HistoryDetailComponent } from "./history-detail.component";
 
-describe('HistoryDetailComponent', () => {
+describe("HistoryDetailComponent", () => {
   let component: HistoryDetailComponent;
   let fixture: ComponentFixture<HistoryDetailComponent>;
 
@@ -19,7 +19,7 @@ describe('HistoryDetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(component).toBeTruthy();
   });
 });

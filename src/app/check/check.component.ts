@@ -1,15 +1,15 @@
-import 'rxjs/add/operator/switchMap';
+import "rxjs/add/operator/switchMap";
 
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
-import { CheckService } from './../check.service';
+import { CheckService } from "./../check.service";
 
 
 @Component({
-  selector: 'app-check',
-  templateUrl: './check.component.html',
-  styleUrls: ['./check.component.css'],
+  selector: "app-check",
+  templateUrl: "./check.component.html",
+  styleUrls: ["./check.component.css"],
 
 })
 
@@ -21,7 +21,7 @@ export class CheckComponent implements OnInit {
   // storedItems - array w checkService ze wszystim
 
   // progress spiner
-  loading: boolean = false;
+  loading = false;
 
   // error message
   isInHistory: boolean;
@@ -33,7 +33,7 @@ export class CheckComponent implements OnInit {
 
   onClick(inputValue: string) {
     // zapisuje input
-    let inVal = inputValue.toUpperCase().replace(/-/g, '')
+    const inVal = inputValue.toUpperCase().replace(/-/g, "");
 
     this.loading = true;
 
@@ -64,7 +64,7 @@ export class CheckComponent implements OnInit {
       .getData(inVal)
       .subscribe(res => {
         // Router
-        this.router.navigate(['/detail', inVal]);
+        this.router.navigate(["/detail", inVal]);
 
         this.checkService.serverData = res;
         this.checkService.err404 = false;
@@ -89,29 +89,29 @@ export class CheckComponent implements OnInit {
 
 
   afterServerGet() {
-    this.compare()
+    this.compare();
 
-    localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
+    localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems));
   }
 
 
-  // sprawdza czy znajduje sie w bazie  
+  // sprawdza czy znajduje sie w bazie
   compare() {
 
     if
 
       (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue) > -1) {
 
-      this.update()
+      this.update();
 
     } else {
 
-      this.store()
+      this.store();
 
     }
   }
 
-  // uaktualnia dane w localstorage 
+  // uaktualnia dane w localstorage
   update() {
 
     // spr czy key jest w localstorage i przypisuje do niego value
@@ -124,7 +124,7 @@ export class CheckComponent implements OnInit {
       }
     }
 
-    localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
+    localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems));
   }
 
   store() {
@@ -134,15 +134,15 @@ export class CheckComponent implements OnInit {
         value: null
       });
 
-    this.update()
+    this.update();
   }
 
 
   //pobiera dane z LocalStorage do array
   getDataFromLS(): void {
 
-    if (window.localStorage.hasOwnProperty('inputVal')) {
-      this.checkService.storedItems = JSON.parse(localStorage.getItem('inputVal'));
+    if (window.localStorage.hasOwnProperty("inputVal")) {
+      this.checkService.storedItems = JSON.parse(localStorage.getItem("inputVal"));
 
 
     } else {

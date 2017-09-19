@@ -1,14 +1,14 @@
-import { CheckService } from './../check.service';
-import { HistoryComponent } from './../history/history.component';
+import { CheckService } from "./../check.service";
+import { HistoryComponent } from "./../history/history.component";
 
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import 'rxjs/add/operator/switchMap';
+import { Component, Input, OnInit } from "@angular/core";
+import { ActivatedRoute, ParamMap } from "@angular/router";
+import "rxjs/add/operator/switchMap";
 
 @Component({
-  selector: 'app-history-detail',
-  templateUrl: './history-detail.component.html',
-  styleUrls: ['./history-detail.component.css']
+  selector: "app-history-detail",
+  templateUrl: "./history-detail.component.html",
+  styleUrls: ["./history-detail.component.css"]
 })
 
 export class HistoryDetailComponent implements OnInit {
@@ -34,7 +34,7 @@ export class HistoryDetailComponent implements OnInit {
     this.route.paramMap
       .subscribe(params => {
 
-        this.key = params.get('key')
+        this.key = params.get("key");
 
         this.serverData = this.checkService.serverData;
 
@@ -44,18 +44,18 @@ export class HistoryDetailComponent implements OnInit {
 
             if (this.key == this.checkService.storedItems[i].key) {
 
-              this.item = this.checkService.storedItems[i]
+              this.item = this.checkService.storedItems[i];
 
               // console.log(this.checkService.storedItems[i])
             }
           }
         } else {
 
-          console.log("Brak w bazie")
+          console.log("Brak w bazie");
         }
 
       }
-      )
+      );
   }
 
 }
