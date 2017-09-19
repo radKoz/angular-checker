@@ -1,12 +1,9 @@
-
-import { distinctUntilKeyChanged } from 'rxjs/operator/distinctUntilKeyChanged';
-import { CheckDetailComponent } from './../check-detail/check-detail.component';
-import { HistoryComponent } from './../history/history.component';
-import { CheckService } from './../check.service';
-import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs';
 import 'rxjs/add/operator/switchMap';
+
+import { Component, OnInit } from '@angular/core';
+
+import { CheckService } from './../check.service';
+
 
 @Component({
   selector: 'app-check',
@@ -16,20 +13,20 @@ import 'rxjs/add/operator/switchMap';
 })
 
 export class CheckComponent implements OnInit {
-
-  isActive: boolean;
+  // dane z serwera
   serverData;
-  isInHistory: boolean;
+  serverError: boolean;
   // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
-  // LSDATA = ARRAY POBIERANY Z LOCAL TUTAJ
   // SERVERDATA = POBIERANE Z SERWERA DANE
+
+  detailItem;
+
+  isInHistory: boolean;
   loading: boolean = false;
 
 
 
   constructor(private checkService: CheckService) { }
-
-
 
   // zapisuje input
 
@@ -41,11 +38,13 @@ export class CheckComponent implements OnInit {
     this.loading = true;
 
     // sprawdza czy dane są już w historii
-    
+
     if (this.checkService.storedItems.findIndex(x => x.key === inVal) > -1 && this.checkService.storedItems.findIndex(x => x.value) > -1) {
 
       // console.log("onclick if")
       this.update()
+
+
       this.isInHistory = true;
       this.loading = false;
       this.checkService.err404 = false;
@@ -59,22 +58,42 @@ export class CheckComponent implements OnInit {
         .getData(inVal)
         .subscribe(res => {
 
+
+          this.checkService.serverError = false;
+          if (res.CompanyInformation != null) {
+
+
           this.checkService.serverData = res;
           this.checkService.err404 = false;
           this.serverData = this.checkService.serverData;
           this.checkService.searchValue = inVal;
-
+          console.log(this.serverData);
           // console.log(this.checkService.serverData)
+
+          // pokazuje kartę
+          this.detailItem = inVal;
+          
 
           this.afterServerGet()
           this.loading = false;
 
+          } else {
+            this.loading = false
+            this.checkService.err404 = true;
+          }
         },
         (err: Response) => {
 
           if (err.status === 404) {
 
             this.checkService.err404 = err.status;
+            this.loading = false
+
+
+          } else {
+            console.log(err);
+            this.checkService.serverError = true;
+            this.serverError = this.checkService.serverError;
             this.loading = false
           }
 
@@ -83,14 +102,13 @@ export class CheckComponent implements OnInit {
         }), () => this.loading = false
 
     }
+    
   }
 
 
 
 
   afterServerGet() {
-    // console.log("tutu serverdata " + this.serverData.data.id)
-
     this.compare()
 
     localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
@@ -106,7 +124,7 @@ export class CheckComponent implements OnInit {
       this.update()
 
     } else {
-      // console.log('compare else CZYLI STORE OD RAZU')
+      // console.log('compare else')
       this.store()
 
     }
@@ -115,12 +133,15 @@ export class CheckComponent implements OnInit {
   // uaktualnia dane w localstorage 
   update() {
 
-    console.log("UPDATE() CZYLI SPR CZY JEST KEY W LOCALSTORATE / STORED ITEMS I PRZYPISUJE DANE")
+    // console.log("UPDATE() CZYLI SPR CZY JEST KEY W LOCALSTORATE / STORED ITEMS I PRZYPISUJE DANE")
 
     for (let i = 0; i < this.checkService.storedItems.length; i++) {
       if (this.checkService.searchValue === this.checkService.storedItems[i].key) {
 
-        this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;
+        this.checkService.storedItems[i].value = this.serverData.CompanyInformation;
+
+        //fake data
+        // this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;
 
       }
     }

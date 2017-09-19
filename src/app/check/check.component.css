@@ -1,5 +1,6 @@
 .same-height {
   min-height: 210px;
+  margin-bottom: 20px;
 }
 
 .full-width {
@@ -17,7 +18,7 @@
 }
 
 #searchBox {
-    font-size: 1.2em;
+  font-size: 1.2em;
 }
 
 .center {

@@ -29,10 +29,9 @@ delete(id: string) {
   this.storedItems = this.checkService.storedItems;
   
       for (let i = 0; i < this.checkService.storedItems.length; i++) {
+
         if (id === this.checkService.storedItems[i].key) {
-  
          this.checkService.storedItems.splice(i, 1);
-  
         }
       }
   
@@ -40,25 +39,18 @@ delete(id: string) {
     }
 
   tester() {
-
-    console.log(this.storedItems)
-
+    // console.log(this.storedItems)
   }
 
   reset() {
     this.location.go('/')
     localStorage.clear();
-    location.reload();
-    
+    location.reload(); 
   }
 
 
   ngOnInit() {
-
     this.storedItems = this.checkService.storedItems;
   }
-
-
-
 
 }

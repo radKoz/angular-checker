@@ -28,10 +28,17 @@ export class HistoryDetailComponent implements OnInit {
   ngOnInit() {
 
     this.serverData = this.checkService.serverData;
+    this.detailRoute();
 
+
+  }
+
+  detailRoute() {
     this.route.paramMap
       .subscribe(params => {
+        
         this.key = params.get('key')
+        console.log(this.key)
         this.serverData = this.checkService.serverData;
 
         if (this.checkService.storedItems.findIndex(x => x.key === this.key) > -1) {
@@ -45,20 +52,21 @@ export class HistoryDetailComponent implements OnInit {
               // console.log(this.checkService.storedItems[i])
             }
           }
-
         } else {
-          
+
           this.noData = "Brak w bazie danych";
+
         }
         //  console.log("KEY "+this.key)
         //  console.log("ITEM "+this.item.Name)
 
-      })
-    // this.teston()
+      }
+      )
   }
-
-  teston() {
-
+  tester() {
+    console.log(this.noData)
   }
 
 }
+
+// wpisujemy numer => wszystko sie ladnie robione > dodaje sie do historii > pokazuja sie dane po kliknieciu w historie. maja sie pokazywac od razu automatycznie. 

@@ -2,16 +2,18 @@
 .main-wrapper {
   margin-top: 0;
   min-height: calc(100vh - 20px);
-  background-image: url("/assets/images/fabric_of_squares_gray_@2X.png")
+  background-image: url("/assets/images/doodles.png")
 }
 
-h1 {
+.head {
   font-size: 1.2em;
   font-weight: bold;
   margin-top: 0;
   padding-top: 20px;
   padding-bottom: 20px;
-  border-bottom: 1px dotted black;
+  border-bottom: 2px solid #D1D3D4;
+  border-radius: 0px 0px 25px 25px;
+  background-color: white;
 }
 
 .hint {
@@ -22,9 +24,15 @@ h1 {
 }
 
 
-footer {
+.footer {
   color: rgb(46, 46, 46);
   text-align: center;
-  background-image: url("/assets/images/fabric_of_squares_gray.png");
+  /* background-image: url("/assets/images/fabric_of_squares_gray.png"); */
+  background-color: white;
   height: 20px;
+}
+@media (max-width: 360px) {
+  .footer {
+    height: 40px;
+  }
 }

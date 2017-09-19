@@ -1,29 +1,28 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <div class="main-wrapper">
   <div style="text-align:center">
-    <h1>
-      Aplikacja do pobierania danych z API po podaniu numeru
+    <h1 class="head">
+      Aplikacja do pobierania danych z API
     </h1>
-    <p class="hint">Numery w bazie: 41240007741569,
-        KRS0000999911,
-        777-777-77-77,
-        PL8532387587,
-        3871035552
-        </p>
+    <!-- dla fakeServer
+    <p class="hint">Numery w bazie: 41240007741569, KRS0000999911, 777-777-77-77, PL8532387587, 3871035552
+    </p> -->
   </div>
   <div class="container">
-    <div class='col-md-6 col-xs-12'>
-      <app-check></app-check>
-    </div>
+    <div class="row">
+      <div class='col-md-6 col-xs-12'>
+        <app-check></app-check>
+        <!-- <router-outlet></router-outlet> -->
+      </div>
 
-    <div class='col-md-6 col-xs-12' >
-      <app-history></app-history>
-      <router-outlet></router-outlet>
-
+      <div class='col-md-6 col-xs-12'>
+        <app-history></app-history>
+        
+      </div>
     </div>
 
   </div>
 
- 
+
 </div>
 <footer class="footer"> &copy; 2017 Radosław Kozłowski. Wszelkie prawa zastrzeżone.</footer>
