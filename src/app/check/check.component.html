@@ -1,52 +1,57 @@
 <md-card class="same-height">
-<md-card-title>Wpisz numer</md-card-title>
 
-<form #f="ngForm" class="form-container">
-  <!-- <label for='searchBox'></label><br> -->
-  <div class='input-group'>
-    <md-form-field class="full-width">
+  <md-card-title>Wpisz numer</md-card-title>
 
-      <input
-        required minlength="9"
+  <form #f="ngForm" class="form-container">
+
+    <div class='input-group'>
+      <md-form-field class="full-width">
+
+        <input 
+        required 
+        minlength="9" 
         pattern="(([KRS])?([PL])?[\-0-9KRSPLkrspl]*)" 
         ngModel 
         name="searchBox" 
         #searchBox="ngModel"
         id="searchBox" 
         type="text" 
-       
         mdInput 
         placeholder='NIP/KRS/REGON' />
 
-        <md-error *ngIf='searchBox.touched && !searchBox.valid' class="">
+        <md-error *ngIf='searchBox.touched && !searchBox.valid'>
           Wpisana wartość nie jest prawidłowa.
         </md-error>
-    </md-form-field>
-    <span class="input-group-btn">
-<button md-raised-button color="primary" class="btn-check"
+      </md-form-field>
+      <span class="input-group-btn">
+<button
+  md-raised-button color="primary" 
+  class="btn-check"
   (click)="onClick(searchBox.value)"
-  [disabled]='!f.valid'
->Sprawdź</button>
+  [disabled]='!f.valid'>
+  Sprawdź
+</button>
 </span>
 
+    </div>
+    <div class="progressbar" *ngIf="loading">
+      <app-loader [loading]="loading"></app-loader>
+    </div>
+
+  </form>
+  <!-- błędy -->
+  <div *ngIf="this.checkService.err404" class="alert alert-danger">
+    Nie znaleziono numeru.
+  </div>
+  <div *ngIf="this.isInHistory" class="alert alert-danger">
+    Numer znaduje się już w historii.
+  </div>
+  <div *ngIf="this.serverError" class="alert alert-danger">
+    Błąd serwera, spróbuj ponownie później.
   </div>
 
 
-</form>
-<div *ngIf="this.checkService.err404" class="alert alert-danger">
-  Nie znaleziono numeru.
-</div>
-<div *ngIf="this.isInHistory" class="alert alert-danger">
-  Numer znaduje się już w historii.
-</div>
-<div *ngIf="this.serverError" class="alert alert-danger">
-  Błąd serwera, spróbuj ponownie później.
-</div>
-
-<md-list-item [routerLink]="['/detail', detailItem]"></md-list-item>
-<router-outlet></router-outlet>
+  <!-- history-detail component router outlet -->
+  <router-outlet></router-outlet>
 
 </md-card>
-<div class="center" *ngIf="loading">
-  <app-loader [loading]="loading"></app-loader>
-</div>

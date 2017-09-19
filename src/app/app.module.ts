@@ -6,21 +6,20 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { CheckComponent } from './check/check.component';
 import { HistoryComponent } from './history/history.component';
-import { CheckDetailComponent } from './check-detail/check-detail.component';
 import { HistoryDetailComponent } from './history-detail/history-detail.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from "./app-routing.module";
 // material
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdInputModule, MdProgressSpinnerModule, MdListModule, MdIconModule, MdCardModule, MdExpansionModule } from '@angular/material';
+import { MdButtonModule, MdInputModule, MdProgressSpinnerModule, MdListModule, MdIconModule, MdCardModule, MdExpansionModule, MdProgressBarModule } from '@angular/material';
 
 
 
 // web API Simulation 
 
-// import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api/in-memory-web-api.module';
 
-// import { InMemoryDataService }  from './in-memory-data.service';
+import { InMemoryDataService }  from './in-memory-data.service';
 
 import { LoaderComponent } from './shared/loader/loader.component';
 
@@ -31,7 +30,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
     AppComponent,
     CheckComponent,
     HistoryComponent,
-    CheckDetailComponent,
+    // CheckDetailComponent,
     HistoryDetailComponent,
     LoaderComponent,
    
@@ -42,12 +41,13 @@ import { LoaderComponent } from './shared/loader/loader.component';
     HttpModule,
     FormsModule,
     AppRoutingModule,
-    // InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService),
     BrowserAnimationsModule,
     //material modules
     MdButtonModule,
     MdInputModule,
     MdProgressSpinnerModule,
+    MdProgressBarModule,
     MdListModule,
     MdIconModule,
     MdCardModule,

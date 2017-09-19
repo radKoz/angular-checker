@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/switchMap';
 
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { CheckService } from './../check.service';
 
@@ -15,97 +16,83 @@ import { CheckService } from './../check.service';
 export class CheckComponent implements OnInit {
   // dane z serwera
   serverData;
-  serverError: boolean;
+
   // storedItems = ARRAY Z WSZYSTKIM W CHECK SERVICE
-  // SERVERDATA = POBIERANE Z SERWERA DANE
 
-  detailItem;
-
-  isInHistory: boolean;
+  // progress spiner
   loading: boolean = false;
 
+  // error message
+  isInHistory: boolean;
+  serverError: boolean;
 
+  constructor(private checkService: CheckService, private router: Router) { }
 
-  constructor(private checkService: CheckService) { }
-
-  // zapisuje input
+ 
 
   onClick(inputValue: string) {
-    // console.log(this.checkService.storedItems)
-
+ // zapisuje input
     let inVal = inputValue.toUpperCase().replace(/-/g, '')
 
     this.loading = true;
 
+    this.checkIfInHistory(inVal);
+  }
+
+
+  checkIfInHistory(inVal: string) {
     // sprawdza czy dane są już w historii
-
     if (this.checkService.storedItems.findIndex(x => x.key === inVal) > -1 && this.checkService.storedItems.findIndex(x => x.value) > -1) {
-
-      // console.log("onclick if")
-      this.update()
-
+      this.update();
 
       this.isInHistory = true;
       this.loading = false;
       this.checkService.err404 = false;
-
-    } else {
-
+    }
+    else {
       this.loading = true;
       this.isInHistory = false;
 
-      this.checkService
-        .getData(inVal)
-        .subscribe(res => {
-
-
-          this.checkService.serverError = false;
-          if (res.CompanyInformation != null) {
-
-
-          this.checkService.serverData = res;
-          this.checkService.err404 = false;
-          this.serverData = this.checkService.serverData;
-          this.checkService.searchValue = inVal;
-          console.log(this.serverData);
-          // console.log(this.checkService.serverData)
-
-          // pokazuje kartę
-          this.detailItem = inVal;
-          
-
-          this.afterServerGet()
-          this.loading = false;
-
-          } else {
-            this.loading = false
-            this.checkService.err404 = true;
-          }
-        },
-        (err: Response) => {
-
-          if (err.status === 404) {
-
-            this.checkService.err404 = err.status;
-            this.loading = false
-
-
-          } else {
-            console.log(err);
-            this.checkService.serverError = true;
-            this.serverError = this.checkService.serverError;
-            this.loading = false
-          }
-
-          console.log(this.checkService.err404)
-
-        }), () => this.loading = false
-
+      this.callServer(inVal);
     }
-    
   }
 
 
+  callServer(inVal: string) {
+    this.checkService
+      .getData(inVal)
+      .subscribe(res => {
+        //api aveneo
+        // this.checkService.serverError = false;
+        // if (res.CompanyInformation != null) {
+        // Router
+        this.router.navigate(['/detail', inVal]);
+        
+        this.checkService.serverData = res;
+        this.checkService.err404 = false;
+        this.serverData = this.checkService.serverData;
+        this.checkService.searchValue = inVal;
+
+        this.afterServerGet();
+        this.loading = false;
+        //api aveneo
+        // } else {
+        //   this.loading = false
+        //   this.checkService.err404 = true;
+        // }
+      }, (err: Response) => {
+        if (err.status === 404) {
+          this.checkService.err404 = err.status;
+          this.loading = false;
+        } else {
+          console.log(err);
+          this.checkService.serverError = true;
+          this.serverError = this.checkService.serverError;
+          this.loading = false;
+        }
+        console.log(this.checkService.err404);
+      }), () => this.loading = false;
+  }
 
 
   afterServerGet() {
@@ -114,17 +101,18 @@ export class CheckComponent implements OnInit {
     localStorage.setItem('inputVal', JSON.stringify(this.checkService.storedItems));
   }
 
-  // sprawdza czy znajduje sie w bazie  - to bedzie w history component
+
+  // sprawdza czy znajduje sie w bazie  
   compare() {
 
     if
+
       (this.checkService.storedItems.findIndex(x => x.key === this.checkService.searchValue) > -1) {
-      // console.log("Compare if")
 
       this.update()
 
     } else {
-      // console.log('compare else')
+
       this.store()
 
     }
@@ -133,15 +121,15 @@ export class CheckComponent implements OnInit {
   // uaktualnia dane w localstorage 
   update() {
 
-    // console.log("UPDATE() CZYLI SPR CZY JEST KEY W LOCALSTORATE / STORED ITEMS I PRZYPISUJE DANE")
-
+    // spr czy key jest w localstorage i przypisuje do niego value
     for (let i = 0; i < this.checkService.storedItems.length; i++) {
       if (this.checkService.searchValue === this.checkService.storedItems[i].key) {
 
-        this.checkService.storedItems[i].value = this.serverData.CompanyInformation;
+        //aveneo
+        // this.checkService.storedItems[i].value = this.serverData.CompanyInformation;
 
         //fake data
-        // this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;
+        this.checkService.storedItems[i].value = this.serverData.data.value.CompanyInformation;
 
       }
     }
@@ -155,10 +143,12 @@ export class CheckComponent implements OnInit {
         key: this.checkService.searchValue,
         value: null
       });
+
     this.update()
   }
 
-  //pobiera dane z LS do array
+
+  //pobiera dane z LocalStorage do array
   getDataFromLS(): void {
 
     if (window.localStorage.hasOwnProperty('inputVal')) {
@@ -175,6 +165,6 @@ export class CheckComponent implements OnInit {
 
     this.getDataFromLS();
 
-
   }
+
 }

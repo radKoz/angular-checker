@@ -21,9 +21,14 @@
   font-size: 1.2em;
 }
 
-.center {
+/* .center {
   display: flex;
   flex-direction: row;
+} */
+
+.progressbar {
+  margin: 0;
+  padding: 0;
 }
 
 app-loader {

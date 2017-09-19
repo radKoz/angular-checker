@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { CheckComponent } from './check/check.component';
 import { HistoryComponent } from './history/history.component';
-import { CheckDetailComponent } from './check-detail/check-detail.component';
 import { HistoryDetailComponent } from './history-detail/history-detail.component';
 
 const routes: Routes = [

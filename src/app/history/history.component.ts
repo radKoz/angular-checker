@@ -1,7 +1,7 @@
 import { CheckService } from './../check.service';
 import { CheckComponent } from './../check/check.component';
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 @Component({
@@ -14,8 +14,7 @@ import { Location } from '@angular/common';
 export class HistoryComponent implements OnInit {
 
 
- storedItems: Array<Object>;
-
+  storedItems: Array<Object>;
 
 
   constructor(
@@ -25,27 +24,30 @@ export class HistoryComponent implements OnInit {
   ) { }
 
 
-delete(id: string) {
-  this.storedItems = this.checkService.storedItems;
-  
-      for (let i = 0; i < this.checkService.storedItems.length; i++) {
 
-        if (id === this.checkService.storedItems[i].key) {
-         this.checkService.storedItems.splice(i, 1);
-        }
-      }
   
-      localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
+
+
+
+  delete(id: string) {
+    this.storedItems = this.checkService.storedItems;
+
+    for (let i = 0; i < this.checkService.storedItems.length; i++) {
+
+      if (id === this.checkService.storedItems[i].key) {
+        this.checkService.storedItems.splice(i, 1);
+      }
     }
 
-  tester() {
-    // console.log(this.storedItems)
+    localStorage.setItem("inputVal", JSON.stringify(this.checkService.storedItems))
   }
+
+
 
   reset() {
     this.location.go('/')
     localStorage.clear();
-    location.reload(); 
+    location.reload();
   }
 
 
